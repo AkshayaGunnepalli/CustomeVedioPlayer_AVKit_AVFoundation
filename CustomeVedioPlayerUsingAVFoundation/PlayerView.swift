@@ -100,7 +100,8 @@ class PlayerView: UIView {
         self.operatingStackView.fullScreenButton.addTarget(self, action: #selector(handleLandscapeMode), for: .touchUpInside)
         
         self.pauseAndPlayView.pauseAndPlayButton.addTarget(self, action: #selector(playAndPause), for: .touchUpInside)
-        
+        self.pauseAndPlayView.postViewButton.addTarget(self, action: #selector(seekForward), for: .touchUpInside)
+        self.pauseAndPlayView.preViewButton.addTarget(self, action: #selector(seekBackward), for: .touchUpInside)
     }
 
     
@@ -134,6 +135,9 @@ class PlayerView: UIView {
     func muteAndUnmute(){
         self.operatingStackView.soundControll.animateClick {
             self.operatingStackView.soundControll.isSelected.toggle()
+            DispatchQueue.main.async {
+                self.player?.isMuted = self.operatingStackView.soundControll.isSelected
+            }
         }
     }
     
@@ -171,6 +175,34 @@ class PlayerView: UIView {
         playerViewController.modalPresentationStyle = .fullScreen
         APP_DELEGATE.isVideoPlaying = true
         viewController.present(playerViewController, animated: true) 
+    }
+
+      /// Seeking video 15 seconds backward
+    @objc func seekBackward() {
+        let currentTime = CMTimeGetSeconds(player?.currentTime() ?? CMTime())
+        var newTime = currentTime - 14.0
+        
+        if newTime < 0 {
+            newTime = 0
+        }
+        let time: CMTime = CMTimeMake(value: Int64(newTime * 1000), timescale: 1000)
+        player?.seek(to: time)
+    }
+    
+    /// Seeking video 15 seconds forward
+    @objc func seekForward() {
+        guard let duration = player?.currentItem?.duration else {
+            return
+        }
+        
+        let currentTime = CMTimeGetSeconds(player?.currentTime() ?? CMTime())
+        var newTime = currentTime + 15.0
+        
+        if newTime > CMTimeGetSeconds(duration) {
+            newTime = CMTimeGetSeconds(duration)
+        }
+        let time: CMTime = CMTime(value: Int64(newTime * 1000), timescale: 1000)
+        player?.seek(to: time)
     }
     
     /// Adding an observer to get video time periodically
