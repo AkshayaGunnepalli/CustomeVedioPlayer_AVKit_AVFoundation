@@ -98,6 +98,7 @@ class PlayerView: UIView {
         self.operatingStackView.progressView.addTarget(nil, action: #selector(sliderReleased), for: .touchUpInside)
         self.operatingStackView.soundControll.addTarget(self, action: #selector(muteAndUnmute), for: .touchUpInside)
         self.operatingStackView.fullScreenButton.addTarget(self, action: #selector(handleLandscapeMode), for: .touchUpInside)
+        self.operatingStackView.settings.addTarget(self, action: #selector(settingsActions), for: .touchUpInside)
         
         self.pauseAndPlayView.pauseAndPlayButton.addTarget(self, action: #selector(playAndPause), for: .touchUpInside)
         self.pauseAndPlayView.postViewButton.addTarget(self, action: #selector(seekForward), for: .touchUpInside)
@@ -204,6 +205,12 @@ class PlayerView: UIView {
         let time: CMTime = CMTime(value: Int64(newTime * 1000), timescale: 1000)
         player?.seek(to: time)
     }
+
+     @objc func settingsActions(){
+        /// Add necessary Functionalities
+        
+    }
+   
     
     /// Adding an observer to get video time periodically
     func setupObserver() {
