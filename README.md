@@ -1,3 +1,14 @@
-# CustomeVedioPlayer_AVKit_AVFoundation
+# 🎬 CustomeVedioPlayer_AVKit_AVFoundation
 
-This is a custom video player using AVFoundation and AVKit in Swift, featuring play, pause, mute, unmute, and progress tracking functionalities.
+A lightweight **custom video player** built using Swift, `AVFoundation`, and `AVKit`.  
+It includes features like play, pause, mute/unmute, and progress tracking.
+
+---
+
+## 📱 Features
+
+- ▶️ Play / Pause Video
+- 🔇 Mute / Unmute Audio
+- ⏱ Track Playback Progress
+- 🎛 Custom UI controls using Swift
+- 📡 Load video from local or remote URL
